@@ -14,22 +14,22 @@
 
     // Fixed Navbar
     $(window).scroll(function () {
-        if ($(window).width() < 992) {
-            if ($(this).scrollTop() > 55) {
-                $('.fixed-top').addClass('shadow');
-            } else {
-                $('.fixed-top').removeClass('shadow');
-            }
-        } else {
-            if ($(this).scrollTop() > 55) {
-                $('.fixed-top').addClass('shadow').css('top', -55);
-            } else {
-                $('.fixed-top').removeClass('shadow').css('top', 0);
-            }
-        } 
-    });
-    
-    
+      if ($(window).width() < 992) {
+          if ($(this).scrollTop() > 55) {
+              $('.fixed-top').addClass('scrolled-mobile');
+          } else {
+              $('.fixed-top').removeClass('scrolled-mobile');
+          }
+      } else {
+          if ($(this).scrollTop() > 55) {
+              $('.fixed-top').addClass('scrolled-desktop');
+          } else {
+              $('.fixed-top').removeClass('scrolled-desktop');
+          }
+      }
+  });
+
+
    // Back to top button
    $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
