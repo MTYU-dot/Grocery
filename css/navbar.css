@@ -1,0 +1,90 @@
+/*** Topbar Start ***/
+.fixed-top {
+  transition: 0.5s;
+  /* background: var(--bs-white); */
+  border: none;
+}
+
+/* Styling ketika scrolled di mobile (width < 992px) */
+.fixed-top.scrolled-mobile {
+  background: linear-gradient(-145deg, rgba(0, 103, 105, 1) 0%, rgba(64, 165, 120, 1) 100%);
+  /* Ganti dengan warna saat scroll lebih dari 55px di mobile */
+  border-radius: 9px;
+}
+
+/* Styling ketika scrolled di desktop (width >= 992px) */
+.fixed-top.scrolled-desktop {
+  background: linear-gradient(-145deg, rgba(0, 103, 105, 1) 0%, rgba(64, 165, 120, 1) 100%);
+  /* Ganti dengan warna saat scroll lebih dari 55px di desktop */
+  top: -5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 9px;
+}
+
+/*** Topbar End ***/
+
+/*** Navbar Start ***/
+.navbar .navbar-nav .nav-link {
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: .5s;
+}
+
+.navbar {
+  /* height: 100px; */
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active,
+.fixed-top.bg-white .navbar .navbar-nav .nav-link:hover,
+.fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
+  color: var(--bs-white);
+}
+
+.navbar .dropdown-toggle::after {
+  border: none;
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* .navbar-collapse {
+
+  background: linear-gradient(-145deg, rgba(0, 103, 105, 1) 0%, rgba(64, 165, 120, 1) 100%);
+} */
+
+@media (min-width: 1200px) {
+  .navbar .nav-item .dropdown-menu {
+    display: block;
+    visibility: hidden;
+    top: 100%;
+    transform: rotateX(-75deg);
+    transform-origin: 0% 0%;
+    border: 0;
+    transition: .5s;
+    opacity: 0;
+  }
+}
+
+.dropdown .dropdown-menu a:hover {
+  background: linear-gradient(-145deg, rgba(0, 103, 105, 1) 0%, rgba(64, 165, 120, 1) 100%);
+  color: var(--bs-primary);
+}
+
+.navbar .nav-item:hover .dropdown-menu {
+  transform: rotateX(0deg);
+  visibility: visible;
+  background: linear-gradient(-145deg, rgba(0, 103, 105, 1) 0%, rgba(64, 165, 120, 1) 100%);
+  border-radius: 10px !important;
+  transition: .5s;
+  opacity: 1;
+}
+
+#searchModal .modal-content {
+  background: rgba(255, 255, 255, .8);
+}
+
+/*** Navbar End ***/
