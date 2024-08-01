@@ -1,0 +1,363 @@
+{% extends "/user/masterUser.html" %}
+
+{% set title = "Account Setting - Grocery" %}
+
+{% block content %}
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-12 card p-3 shadow-sm mb-4">
+      <!--left col-->
+
+      <div class="text-center mb-4">
+        <form id="uploadForm" action="/uploadProfilePicture" method="post" enctype="multipart/form-data">
+          <div class="profile-pic">
+            <label class="-label" for="file">
+              <span><i class="bi bi-camera-fill"></i></span>
+              <span>Change Image</span>
+            </label>
+            <input id="file" type="file" name="profile" onchange="loadFile(event)" />
+            <img src="images/user/{{ user.profile }}" id="output" class="img-thumbnail" width="200" />
+          </div>
+        </form>
+        <h4 class="mt-3"><i class="bi bi-person"></i> {{ user.username }}</h4>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">Website <i class="fas fa-link"></i></div>
+        <div class="card-body"><a href="https://info@themewagon.com">info@themewagon.com</a></div>
+      </div>
+
+      <ul class="list-group mb-3">
+        <li class="list-group-item text-muted">Activity</li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Shares</strong> <span>125</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Likes</strong> <span>13</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Posts</strong> <span>37</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>Followers</strong> <span>78</span>
+        </li>
+      </ul>
+
+      <div class="card">
+        <div class="card-header">Social Media</div>
+        <div class="card-body">
+          <i class="fab fa-facebook fa-2x me-3"></i>
+          <i class="fab fa-github fa-2x me-3"></i>
+          <i class="fab fa-twitter fa-2x me-3"></i>
+          <i class="fab fa-pinterest fa-2x me-3"></i>
+          <i class="fab fa-google-plus fa-2x me-3"></i>
+        </div>
+      </div>
+    </div>
+    <!--/col-3-->
+    <div class="col-lg-8 col-md-7 col-12 ms-lg-5">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#home">Personal Data</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#messages">Order</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#settings">Menu 2</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="home">
+          <form class="form mt-4" action="/editProfile/{{ user.user_id }}" method="post" id="registrationForm">
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="first_name" class="form-label">
+                  <h4>First name</h4>
+                </label>
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
+                  title="enter your first name if any." value="{{ user.first_name }}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="last_name" class="form-label">
+                  <h4>Last name</h4>
+                </label>
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
+                  title="enter your last name if any." value="{{ user.last_name }}" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">
+                  <h4>Email</h4>
+                </label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
+                  title="enter your email." value="{{ user.email }}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="no_telp" class="form-label">
+                  <h4>Phone</h4>
+                </label>
+                <input type="text" class="form-control" name="no_telp" id="no_telp" placeholder="enter phone"
+                  title="enter your phone number if any." value="{{ user.no_telp }}" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="gender" class="form-label">
+                  <h4>Gender</h4>
+                </label>
+                <select class="form-control" id="gender" name="gender" title="select gender type" required>
+                  <option value="" {% if user.gender != '' %}style="display:none;" {% endif %}>select gender type
+                  </option>
+                  <option value="L" {% if user.gender == 'L' %}selected{% endif %}>Laki-laki</option>
+                  <option value="P" {% if user.gender == 'P' %}selected{% endif %}>Perempuan</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="tanggal_lahir" class="form-label">
+                  <h4>Date of Birth </h4>
+                </label>
+                <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
+                  value="{{ user.tanggal_lahir }}" required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label for="alamat" class="form-label">
+                  <h4>Address</h4>
+                </label>
+                <input type="text" class="form-control" name="alamat" id="alamat" placeholder="enter address"
+                  title="enter your address." value="{{ user.alamat }}" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button class="btn btn-lg btn-success" type="submit">
+                  <i class="bi bi-check-circle"></i> Save
+                </button>
+                <button class="btn btn-lg btn-secondary" type="reset">
+                  <i class="bi bi-arrow-clockwise"></i> Reset
+                </button>
+              </div>
+            </div>
+          </form>
+          <hr>
+        </div>
+        <!--/tab-pane-->
+        <div class="tab-pane fade" id="messages">
+          <h2></h2>
+          <hr>
+          <form class="form" action="##" method="post" id="registrationForm">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="first_name" class="form-label">
+                  <h4>First name</h4>
+                </label>
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
+                  title="enter your first name if any.">
+              </div>
+              <div class="col-md-6">
+                <label for="last_name" class="form-label">
+                  <h4>Last name</h4>
+                </label>
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
+                  title="enter your last name if any.">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="phone" class="form-label">
+                  <h4>Phone</h4>
+                </label>
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone"
+                  title="enter your phone number if any.">
+              </div>
+              <div class="col-md-6">
+                <label for="mobile" class="form-label">
+                  <h4>Mobile</h4>
+                </label>
+                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number"
+                  title="enter your mobile number if any.">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="email" class="form-label">
+                  <h4>Email</h4>
+                </label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
+                  title="enter your email.">
+              </div>
+              <div class="col-md-6">
+                <label for="location" class="form-label">
+                  <h4>Location</h4>
+                </label>
+                <input type="text" class="form-control" id="location" placeholder="somewhere" title="enter a location">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="password" class="form-label">
+                  <h4>Password</h4>
+                </label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="password"
+                  title="enter your password.">
+              </div>
+              <div class="col-md-6">
+                <label for="password2" class="form-label">
+                  <h4>Verify</h4>
+                </label>
+                <input type="password" class="form-control" name="password2" id="password2" placeholder="password2"
+                  title="enter your password2.">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button class="btn btn-lg btn-success" type="submit">
+                  <i class="bi bi-check-circle"></i> Save
+                </button>
+                <button class="btn btn-lg btn-secondary" type="reset">
+                  <i class="bi bi-arrow-clockwise"></i> Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!--/tab-pane-->
+        <div class="tab-pane fade" id="settings">
+          <hr>
+          <form class="form" action="##" method="post" id="registrationForm">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="first_name" class="form-label">
+                  <h4>First name</h4>
+                </label>
+                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name"
+                  title="enter your first name if any.">
+              </div>
+              <div class="col-md-6">
+                <label for="last_name" class="form-label">
+                  <h4>Last name</h4>
+                </label>
+                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name"
+                  title="enter your last name if any.">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="phone" class="form-label">
+                  <h4>Phone</h4>
+                </label>
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone"
+                  title="enter your phone number if any.">
+              </div>
+              <div class="col-md-6">
+                <label for="mobile" class="form-label">
+                  <h4>Mobile</h4>
+                </label>
+                <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number"
+                  title="enter your mobile number if any.">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="email" class="form-label">
+                  <h4>Email</h4>
+                </label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com"
+                  title="enter your email.">
+              </div>
+              <div class="col-md-6">
+                <label for="location" class="form-label">
+                  <h4>Location</h4>
+                </label>
+                <input type="text" class="form-control" id="location" placeholder="somewhere" title="enter a location">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="password" class="form-label">
+                  <h4>Password</h4>
+                </label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="password"
+                  title="enter your password.">
+              </div>
+              <div class="col-md-6">
+                <label for="password2" class="form-label">
+                  <h4>Verify</h4>
+                </label>
+                <input type="password" class="form-control" name="password2" id="password2" placeholder="password2"
+                  title="enter your password2.">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button class="btn btn-lg btn-success float-end" type="submit">
+                  <i class="bi bi-check-circle"></i> Save
+                </button>
+                <!--<button class="btn btn-lg" type="reset"><i class="bi bi-arrow-clockwise"></i> Reset</button>-->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--/tab-pane-->
+    </div>
+    <!--/tab-content-->
+  </div>
+  <!--/col-9-->
+</div>
+
+<!--/row-->
+{% endblock %}
+
+{% block js %}
+<script>
+  function enableEdit() {
+    let genderInput = document.getElementById('gender');
+    genderInput.removeAttribute('readonly');
+  }
+
+  let loadFile = function (event) {
+    let image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+    // Mengirimkan formulir secara otomatis setelah file dipilih
+    document.getElementById('uploadForm').submit();
+  };
+
+</script>
+
+{% for type, messages in messages %}
+{% for message in messages %}
+
+{% if type == 'error' %}
+<script>
+  Swal.fire({
+    title: 'Error!',
+    text: '{{ message }}',
+    icon: '{{ type }}',
+    confirmButtonText: 'OK'
+  });
+
+</script>
+{% else %}
+<script>
+  Swal.fire({
+    title: 'Success',
+    text: '{{ message }}',
+    icon: '{{ type }}',
+    confirmButtonText: 'OK'
+  });
+
+</script>
+{% endif %}
+
+{% endfor %}
+{% endfor %}
+{% endblock %}
